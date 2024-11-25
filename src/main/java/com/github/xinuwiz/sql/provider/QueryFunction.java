@@ -9,6 +9,6 @@ public interface QueryFunction<T> {
 
     QueryFunction<Object> EMPTY = function -> Optional.empty();
 
-    Optional<T> accept(Function<ResultSet, T> function);
+    T apply(ResultSet result);
 
 }

@@ -22,6 +22,26 @@ public class ConfigurationBuilder {
         return new ConfigurationBuilder(clazz);
     }
 
+    public ConfigurationBuilder driver(String driver) {
+        this.configuration.setDriver(driver);
+        return this;
+    }
+
+    public ConfigurationBuilder url(String url) {
+        this.configuration.setUrl(url);
+        return this;
+    }
+
+    public ConfigurationBuilder username(String username) {
+        this.configuration.setUsername(username);
+        return this;
+    }
+
+    public ConfigurationBuilder password(String password) {
+        this.configuration.setPassword(password);
+        return this;
+    }
+
     public Configuration build() {
         return configuration;
     }

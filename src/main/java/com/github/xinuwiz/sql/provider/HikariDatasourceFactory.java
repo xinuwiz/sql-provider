@@ -3,7 +3,7 @@ package com.github.xinuwiz.sql.provider;
 import com.github.xinuwiz.sql.provider.configuration.Configuration;
 import com.zaxxer.hikari.HikariDataSource;
 
-public class HikariDatasourceFactory {
+public final class HikariDatasourceFactory {
 
     private static HikariDatasourceFactory instance;
 

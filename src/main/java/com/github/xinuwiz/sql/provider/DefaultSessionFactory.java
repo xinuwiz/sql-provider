@@ -6,7 +6,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class DefaultSessionFactory implements SessionFactory {
+public final class DefaultSessionFactory implements SessionFactory {
 
     private final HikariDataSource source;
 
@@ -18,7 +18,7 @@ public class DefaultSessionFactory implements SessionFactory {
     public Session open() {
         try {
             final Connection connection = this.source.getConnection();
-            return new SyncSession(connection);
+            return new DefaultSyncSession(connection);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

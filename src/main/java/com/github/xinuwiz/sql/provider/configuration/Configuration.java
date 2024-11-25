@@ -1,12 +1,17 @@
 package com.github.xinuwiz.sql.provider.configuration;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data public abstract class Configuration {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public abstract class Configuration {
 
-    private final String driver;
-    private final String url;
-    private final String username;
-    private final String password;
+    private String driver;
+    private String url;
+    private String username;
+    private String password;
 
 }
