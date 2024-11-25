@@ -1,0 +1,15 @@
+buildscript {
+    dependencyResolutionManagement {
+        repositories {
+            mavenCentral()
+        }
+    }
+
+    pluginManagement {
+        repositories {
+            mavenCentral()
+        }
+    }
+}
+
+rootProject.name = 'sql-provider'

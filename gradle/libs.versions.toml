@@ -1,0 +1,16 @@
+[versions]
+lombok = '1.18.34'
+hikari = '4.0.3'
+jetbrains-annotations = '24.0.1'
+
+[libraries.lombok]
+module = 'org.projectlombok:lombok'
+version.ref = 'lombok'
+
+[libraries.hikari]
+module = 'com.zaxxer:HikariCP'
+version.ref = 'hikari'
+
+[libraries.jetbrains-annotations]
+module = 'org.jetbrains:annotations'
+version.ref = 'jetbrains-annotations'
