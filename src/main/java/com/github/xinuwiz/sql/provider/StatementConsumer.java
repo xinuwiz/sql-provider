@@ -1,12 +1,12 @@
 package com.github.xinuwiz.sql.provider;
 
-import java.sql.PreparedStatement;
+import com.github.xinuwiz.sql.provider.secure.SecurePreparedStatement;
 
 @FunctionalInterface
 public interface StatementConsumer {
 
     StatementConsumer EMPTY = statement -> { };
 
-    void accept(PreparedStatement statement);
+    void accept(SecurePreparedStatement statement);
 
 }

@@ -1,10 +1,12 @@
 package com.github.xinuwiz.sql.provider;
 
+import com.github.xinuwiz.sql.provider.secure.SecurePreparedStatement;
 import lombok.Getter;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Set;
 
 @Getter
 public abstract class Session implements AutoCloseable {
@@ -24,11 +26,16 @@ public abstract class Session implements AutoCloseable {
         }
     }
 
-    void execute(String command, StatementConsumer consumer) {
-        try (PreparedStatement statement = this.connection.prepareStatement(command)) {
-            consumer.accept(statement);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public abstract void execute(String sql);
+
+    public abstract void execute(String sql, StatementConsumer consumer);
+
+    public abstract <T> T query(String sql, QueryFunction<T> function);
+
+    public abstract <T> T query(String sql, StatementConsumer consumer, QueryFunction<T> function);
+
+    public abstract <T> Set<T> queryMany(String sql, QueryFunction<T> function);
+
+    public abstract <T> Set<T> queryMany(String sql, StatementConsumer consumer, QueryFunction<T> function);
+
 }

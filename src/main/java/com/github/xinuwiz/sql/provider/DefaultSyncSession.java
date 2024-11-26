@@ -1,5 +1,8 @@
 package com.github.xinuwiz.sql.provider;
 
+import com.github.xinuwiz.sql.provider.secure.SecurePreparedStatement;
+import com.github.xinuwiz.sql.provider.secure.SecureResultSet;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,8 +25,9 @@ public final class DefaultSyncSession extends SyncSession {
     @Override
     public void execute(String sql, StatementConsumer consumer) {
         try (PreparedStatement statement = this.getConnection().prepareStatement(sql)) {
-            consumer.accept(statement);
-            statement.executeUpdate();
+            SecurePreparedStatement secure = new SecurePreparedStatement(statement);
+            consumer.accept(secure);
+            secure.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -37,8 +41,8 @@ public final class DefaultSyncSession extends SyncSession {
     @Override
     public <T> T query(String sql, StatementConsumer consumer, QueryFunction<T> function) {
         try (PreparedStatement statement = this.getConnection().prepareStatement(sql)) {
-            consumer.accept(statement);
-            try (ResultSet result = statement.executeQuery()) {
+            SecurePreparedStatement secure = new SecurePreparedStatement(statement);
+            try (SecureResultSet result = secure.query()) {
                 return function.apply(result);
             }
         } catch (SQLException e) {
@@ -55,8 +59,9 @@ public final class DefaultSyncSession extends SyncSession {
     public <T> Set<T> queryMany(String sql, StatementConsumer consumer, QueryFunction<T> function) {
         final Set<T> elements = new HashSet<>();
         try (PreparedStatement statement = this.getConnection().prepareStatement(sql)) {
-            consumer.accept(statement);
-            try (ResultSet result = statement.executeQuery()) {
+            SecurePreparedStatement secure = new SecurePreparedStatement(statement);
+            consumer.accept(secure);
+            try (SecureResultSet result = secure.query()) {
                 while (!result.next()) {
                     T value = function.apply(result);
                     elements.add(value);

@@ -10,7 +10,7 @@ public class ConfigurationBuilder {
         this.configuration = configuration;
     }
 
-    public ConfigurationBuilder(Class<Configuration> clazz) {
+    public ConfigurationBuilder(Class<? extends Configuration> clazz) {
         this.configuration = ReflectionUtil.newInstanceWithoutException(clazz, "Failed to copy base configuration.");
     }
 
@@ -18,7 +18,7 @@ public class ConfigurationBuilder {
         return new ConfigurationBuilder(configuration);
     }
 
-    public static ConfigurationBuilder of(Class<Configuration> clazz) {
+    public static ConfigurationBuilder of(Class<? extends Configuration> clazz) {
         return new ConfigurationBuilder(clazz);
     }
 
