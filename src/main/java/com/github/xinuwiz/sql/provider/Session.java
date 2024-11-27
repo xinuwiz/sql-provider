@@ -38,4 +38,12 @@ public abstract class Session implements AutoCloseable {
 
     public abstract <T> Set<T> queryMany(String sql, StatementConsumer consumer, QueryFunction<T> function);
 
+    public abstract <T> T queryWithAdapter(String sql, Class<T> clazz);
+
+    public abstract <T> T queryWithAdapter(String sql, StatementConsumer consumer, Class<T> clazz);
+
+    public abstract <T> Set<T> queryManyWithAdapter(String sql, Class<T> clazz);
+
+    public abstract <T> Set<T> queryManyWithAdapter(String sql, StatementConsumer consumer, Class<T> clazz);
+
 }

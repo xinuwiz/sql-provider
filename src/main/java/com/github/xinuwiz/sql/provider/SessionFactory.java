@@ -9,6 +9,8 @@ public interface SessionFactory {
 
     HikariDataSource getSource();
 
+    EntityAdapterManager getEntityAdapterManager();
+
     static DefaultSessionFactory newDefault(Configuration configuration) {
         return new DefaultSessionFactory(configuration);
     }
