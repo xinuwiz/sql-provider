@@ -21,5 +21,4 @@ public class EntityAdapterManager {
     public <T> EntityAdapter<T> get(Class<T> clazz) {
         return (EntityAdapter<T>) map.get(clazz);
     }
-
 }

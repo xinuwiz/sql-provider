@@ -12,7 +12,7 @@ import java.util.Set;
 
 public final class DefaultSyncSession extends SyncSession {
 
-    private EntityAdapterManager entityAdapterManager;
+    private final EntityAdapterManager entityAdapterManager;
 
     public DefaultSyncSession(Connection connection, EntityAdapterManager entityAdapterManager) {
         super(connection);
@@ -76,7 +76,7 @@ public final class DefaultSyncSession extends SyncSession {
     }
 
     @Override
-    public <T> T queryWithAdapter(String sql, Class<T> clazz) {
+    public <T> T queryWithAdapter(String sql, Class<? extends T> clazz) {
         try (PreparedStatement statement = this.getConnection().prepareStatement(sql)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 SecureResultSet secure = new SecureResultSet(resultSet);

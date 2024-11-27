@@ -1,10 +1,8 @@
 package com.github.xinuwiz.sql.provider;
 
-import com.github.xinuwiz.sql.provider.secure.SecurePreparedStatement;
 import lombok.Getter;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Set;
 
@@ -38,12 +36,12 @@ public abstract class Session implements AutoCloseable {
 
     public abstract <T> Set<T> queryMany(String sql, StatementConsumer consumer, QueryFunction<T> function);
 
-    public abstract <T> T queryWithAdapter(String sql, Class<T> clazz);
+    public abstract <T> T queryWithAdapter(String sql, Class<? extends EntityAdapter<T>> clazz);
 
-    public abstract <T> T queryWithAdapter(String sql, StatementConsumer consumer, Class<T> clazz);
+    public abstract <T> T queryWithAdapter(String sql, StatementConsumer consumer, Class<? extends EntityAdapter<T>> clazz);
 
-    public abstract <T> Set<T> queryManyWithAdapter(String sql, Class<T> clazz);
+    public abstract <T> Set<T> queryManyWithAdapter(String sql, Class<? extends EntityAdapter<T>> clazz);
 
-    public abstract <T> Set<T> queryManyWithAdapter(String sql, StatementConsumer consumer, Class<T> clazz);
+    public abstract <T> Set<T> queryManyWithAdapter(String sql, StatementConsumer consumer, Class<? extends EntityAdapter<T>> clazz);
 
 }
