@@ -13,7 +13,7 @@ public class EntityAdapterManager {
         this.map = new HashMap<>();
     }
 
-    public <T> void register(Class<EntityAdapter<T>> clazz) {
+    public <T> void register(Class<? extends EntityAdapter<T>> clazz) {
         EntityAdapter<?> instance = ReflectionUtil.newInstanceWithoutException(clazz, "Failed to create entity adapter.");
         map.put(clazz, instance);
     }
@@ -21,4 +21,5 @@ public class EntityAdapterManager {
     public <T> EntityAdapter<T> get(Class<T> clazz) {
         return (EntityAdapter<T>) map.get(clazz);
     }
+
 }
