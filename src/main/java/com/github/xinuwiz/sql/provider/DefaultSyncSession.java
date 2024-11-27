@@ -76,7 +76,7 @@ public final class DefaultSyncSession extends SyncSession {
     }
 
     @Override
-    public <T> T queryWithAdapter(String sql, Class<? extends T> clazz) {
+    public <T> T queryWithAdapter(String sql, Class<? extends EntityAdapter<T>> clazz) {
         try (PreparedStatement statement = this.getConnection().prepareStatement(sql)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 SecureResultSet secure = new SecureResultSet(resultSet);
@@ -88,7 +88,7 @@ public final class DefaultSyncSession extends SyncSession {
     }
 
     @Override
-    public <T> T queryWithAdapter(String sql, StatementConsumer consumer, Class<T> clazz) {
+    public <T> T queryWithAdapter(String sql, StatementConsumer consumer, Class<? extends EntityAdapter<T>> clazz) {
         try (PreparedStatement statement = this.getConnection().prepareStatement(sql)) {
             SecurePreparedStatement secureStatement = new SecurePreparedStatement(statement);
             consumer.accept(secureStatement);
@@ -102,7 +102,7 @@ public final class DefaultSyncSession extends SyncSession {
     }
 
     @Override
-    public <T> Set<T> queryManyWithAdapter(String sql, Class<T> clazz) {
+    public <T> Set<T> queryManyWithAdapter(String sql, Class<? extends EntityAdapter<T>> clazz) {
         final Set<T> elements = new HashSet<>();
         try (PreparedStatement statement = this.getConnection().prepareStatement(sql)) {
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -118,7 +118,7 @@ public final class DefaultSyncSession extends SyncSession {
     }
 
     @Override
-    public <T> Set<T> queryManyWithAdapter(String sql, StatementConsumer consumer, Class<T> clazz) {
+    public <T> Set<T> queryManyWithAdapter(String sql, StatementConsumer consumer, Class<? extends EntityAdapter<T>> clazz) {
         final Set<T> elements = new HashSet<>();
         try (PreparedStatement statement = this.getConnection().prepareStatement(sql)) {
             SecurePreparedStatement secure = new SecurePreparedStatement(statement);

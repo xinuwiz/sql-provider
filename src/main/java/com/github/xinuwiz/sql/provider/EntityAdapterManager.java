@@ -18,7 +18,7 @@ public class EntityAdapterManager {
         map.put(clazz, instance);
     }
 
-    public <T> EntityAdapter<T> get(Class<T> clazz) {
+    public <T> EntityAdapter<T> get(Class<? extends EntityAdapter<T>> clazz) {
         return (EntityAdapter<T>) map.get(clazz);
     }
 }

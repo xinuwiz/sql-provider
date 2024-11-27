@@ -12,7 +12,7 @@ import java.util.Set;
 
 public final class DefaultSyncSession extends SyncSession {
 
-    private EntityAdapterManager entityAdapterManager;
+    private final EntityAdapterManager entityAdapterManager;
 
     public DefaultSyncSession(Connection connection, EntityAdapterManager entityAdapterManager) {
         super(connection);
@@ -76,7 +76,7 @@ public final class DefaultSyncSession extends SyncSession {
     }
 
     @Override
-    public <T> T queryWithAdapter(String sql, Class<T> clazz) {
+    public <T> T queryWithAdapter(String sql, Class<? extends T> clazz) {
         try (PreparedStatement statement = this.getConnection().prepareStatement(sql)) {
             try (ResultSet resultSet = statement.executeQuery()) {
                 SecureResultSet secure = new SecureResultSet(resultSet);
@@ -88,13 +88,13 @@ public final class DefaultSyncSession extends SyncSession {
     }
 
     @Override
-    public <T> T queryWithAdapter(String sql, StatementConsumer consumer, Class<T> clazz) {
+    public <T> T queryWithAdapter(String sql, StatementConsumer consumer, Class<? extends EntityAdapter<T>> clazz) {
         try (PreparedStatement statement = this.getConnection().prepareStatement(sql)) {
             SecurePreparedStatement secureStatement = new SecurePreparedStatement(statement);
             consumer.accept(secureStatement);
             try (ResultSet resultSet = statement.executeQuery()) {
                 SecureResultSet secureResult = new SecureResultSet(resultSet);
-                return this.entityAdapterManager.get(clazz).adapt(secureResult);
+                final T object = this.entityAdapterManager.get(clazz).adapt(secureResult);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
